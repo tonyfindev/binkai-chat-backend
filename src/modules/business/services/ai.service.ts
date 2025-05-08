@@ -118,7 +118,7 @@ export class AiService implements OnApplicationBootstrap {
       solana: {
         type: 'solana' as NetworkType,
         config: {
-          rpcUrl: process.env.SOLANA_RPC_URL || SOL_RPC,
+          rpcUrl: process.env.RPC_URL || SOL_RPC,
           name: 'Solana',
           nativeCurrency: {
             name: 'Solana',
