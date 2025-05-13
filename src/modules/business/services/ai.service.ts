@@ -8,6 +8,7 @@ import {
   NetworksConfig,
   UUID,
   ExtensionWallet,
+  OpenAIModel,
 } from '@binkai/core';
 import { PostgresDatabaseAdapter } from '@binkai/postgres-adapter';
 import { EventEmitter } from 'events';
@@ -134,9 +135,6 @@ export class AiService implements OnApplicationBootstrap {
     });
     this.network = new Network({ networks: this.networks });
 
-    this.bnbProvider = new BnbProvider({
-      rpcUrl: BNB_RPC,
-    });
 
     this.birdeyeApi = new BirdeyeProvider({
       apiKey: process.env.BIRDEYE_API_KEY,
@@ -287,10 +285,15 @@ export class AiService implements OnApplicationBootstrap {
         }),
       ]);
 
+      const llmOpenai = new OpenAIModel({
+        apiKey: process.env.OPENAI_API_KEY,
+        model: 'gpt-4.1',
+      });
+
       // Create new agent
       agent = new Agent(
+        llmOpenai,
         {
-          model: 'gpt-4.1',
           temperature: 0,
           systemPrompt: SYSTEM_PROMPT,
         },
